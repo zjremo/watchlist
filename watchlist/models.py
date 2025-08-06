@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from watchlist import db
 
 
-class User(db.Model, UserMixin):
+class User(db.Model, UserMixin): # 用于登录需要继承UserMixin，供后面在登录时传递用户user给flask会话
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
     username = db.Column(db.String(20))

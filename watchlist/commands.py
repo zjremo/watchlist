@@ -3,12 +3,12 @@ import click
 from watchlist import app, db
 from watchlist.models import User, Movie
 
-
+# 终端命令编写
 @app.cli.command()
 @click.option('--drop', is_flag=True, help='Create after drop.')
 def initdb(drop):
     """Initialize the database."""
-    if drop:
+    if drop: # drop字段存在
         db.drop_all()
     db.create_all()
     click.echo('Initialized database.')
@@ -34,13 +34,13 @@ def forge():
     ]
 
     user = User(name=name)
-    db.session.add(user)
+    db.session.add(user) # 添加用户
     for m in movies:
         movie = Movie(title=m['title'], year=m['year'])
-        db.session.add(movie)
+        db.session.add(movie) # 将movies中所有item加入到数据库
 
     db.session.commit()
-    click.echo('Done.')
+    click.echo('Done.') # 终端输出响应交互信息
 
 
 @app.cli.command()

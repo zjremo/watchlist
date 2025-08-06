@@ -9,7 +9,8 @@ from watchlist.models import User, Movie
 def index():
     if request.method == 'POST':
         if not current_user.is_authenticated:
-            return redirect(url_for('index'))
+            # redirect函数生成http重定向响应，告诉客户端去请求另一个指定的url
+            return redirect(url_for('index')) # url_for根据view function名称来生成对应的url
 
         title = request.form['title']
         year = request.form['year']
@@ -24,7 +25,7 @@ def index():
         flash('Item created.')
         return redirect(url_for('index'))
 
-    movies = Movie.query.all()
+    movies = Movie.query.all() # 重新加载到页面
     return render_template('index.html', movies=movies)
 
 
@@ -92,7 +93,8 @@ def login():
         user = User.query.first()
 
         if username == user.username and user.validate_password(password):
-            login_user(user)
+            # 将user放入flask-login，相当于成功登录
+            login_user(user) # 传入user，将user_id写入到flask会话中，同时将其放入到请求上下文中
             flash('Login success.')
             return redirect(url_for('index'))
 
